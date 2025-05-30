@@ -17,7 +17,7 @@ This is a simple Telegram bot that sends users to a hosted WebGL game page via a
 
 1. Bot is created using [@BotFather](https://t.me/BotFather)
 2. When a user sends `/start`, the bot responds with a hidden button:
-3. 3. The button opens the game hosted at [UnlockMe WebGL](https://chiew12301.github.io/UnlockMeWeb/)
+3. The button opens the game hosted at [UnlockMe WebGL](https://chiew12301.github.io/UnlockMeWeb/)
 
 > 🔒 The game URL and bot token are stored in the `.env` file for security.
 
