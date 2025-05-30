@@ -1,4 +1,4 @@
-# 🎮 UnlockMe Telegram Bot
+# 🎮 KurumiC Telegram Bot
 
 This is a simple Telegram bot that sends users to a hosted WebGL game page via a hidden, secure link.
 
