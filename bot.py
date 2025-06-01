@@ -8,7 +8,7 @@ load_dotenv()
 TOKEN = os.getenv("TOKEN")
 WEBHOOK_URL = os.getenv("WEBHOOK_URL")
 GAME_URL = os.getenv("GAME_URL")
-GAME_SHORT_NAME = os.getenv("GAME_SHORT_NAME")
+GAME_SHORT_NAME = "unlockme" 
 
 bot = Bot(token=TOKEN)
 app = Flask(__name__)
@@ -16,7 +16,7 @@ dispatcher = Dispatcher(bot, None, workers=0)
 
 def start(update, context):
     keyboard = [
-        [InlineKeyboardButton("🎮 Play Unlock Me", callback_game={"game_short_name": GAME_SHORT_NAME})]
+        [InlineKeyboardButton("🎮 Play Unlock Me", callback_data=GAME_SHORT_NAME)]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text("Try Unlock Me by KurumiC below!", reply_markup=reply_markup)
@@ -24,7 +24,7 @@ def start(update, context):
 def game_callback(update, context):
     query = update.callback_query
     if query.game_short_name == GAME_SHORT_NAME:
-        query.answer(url=GAME_URL)
+        query.answer(url=f"https://t.me/{bot.username}?game={GAME_SHORT_NAME}")
     else:
         query.answer("Unknown game.")
 
