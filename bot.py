@@ -16,9 +16,10 @@ dispatcher = Dispatcher(bot, None, workers=0)
 
 def start(update, context):
     keyboard = [
-        [InlineKeyboardButton("🎮 Play Unlock Me", url=GAME_URL)]
+        [InlineKeyboardButton("🎮 Play Unlock Me", callback_game=CallbackGame())]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
+
     context.bot.send_game(
         chat_id=update.effective_chat.id,
         game_short_name=GAME_SHORT_NAME,
