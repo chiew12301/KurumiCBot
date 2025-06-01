@@ -1,4 +1,5 @@
 import os
+import time
 from dotenv import load_dotenv
 from flask import Flask, request
 from telegram import Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup, CallbackGame
@@ -15,14 +16,23 @@ app = Flask(__name__)
 dispatcher = Dispatcher(bot, None, workers=0)
 
 def start(update, context):
+    chat_id = update.effective_chat.id
+
+    context.bot.send_game(
+        chat_id=chat_id,
+        game_short_name="unlockme"
+    )
+
+    time.sleep(2)
+
     keyboard = [
-        [InlineKeyboardButton("🎮 Play Unlock Me", callback_game=CallbackGame())]
+        [InlineKeyboardButton("▶️ Click here to play", url=GAME_URL)]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    context.bot.send_game(
-        chat_id=update.effective_chat.id,
-        game_short_name=GAME_SHORT_NAME,
+    context.bot.send_message(
+        chat_id=chat_id,
+        text="⚠️ If the Play button above doesn’t work, click the button below to start the game:",
         reply_markup=reply_markup
     )
 
