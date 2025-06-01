@@ -23,7 +23,7 @@ def start(update, context):
 
 def game_callback(update, context):
     query = update.callback_query
-    if query.game_short_name == GAME_SHORT_NAME:
+    if query.data == GAME_SHORT_NAME:
         query.answer(url=f"https://t.me/{bot.username}?game={GAME_SHORT_NAME}")
     else:
         query.answer("Unknown game.")
