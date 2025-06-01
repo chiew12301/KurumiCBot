@@ -1,28 +1,35 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, request
-from telegram import Bot, Update
-from telegram.ext import Dispatcher, CommandHandler
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Dispatcher, CommandHandler, CallbackQueryHandler
 
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
 WEBHOOK_URL = os.getenv("WEBHOOK_URL")
 GAME_URL = os.getenv("GAME_URL")
+GAME_SHORT_NAME = os.getenv("GAME_SHORT_NAME")
 
 bot = Bot(token=TOKEN)
 app = Flask(__name__)
-
 dispatcher = Dispatcher(bot, None, workers=0)
 
 def start(update, context):
     keyboard = [
-        [InlineKeyboardButton("🎮 Play Unlock Me", url=GAME_URL)]
+        [InlineKeyboardButton("🎮 Play Unlock Me", callback_data=GAME_SHORT_NAME)]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text("Try Unlock Me by KurumiC below!", reply_markup=reply_markup)
 
+def game_callback(update, context):
+    query = update.callback_query
+    if query.game_short_name == GAME_SHORT_NAME or query.data == GAME_SHORT_NAME:
+        query.answer(url=GAME_URL)
+    else:
+        query.answer("Unknown game.")
+
 dispatcher.add_handler(CommandHandler("start", start))
+dispatcher.add_handler(CallbackQueryHandler(game_callback))
 
 @app.route(f"/{TOKEN}", methods=["POST"])
 def webhook():
