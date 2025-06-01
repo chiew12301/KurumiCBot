@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, request
-from telegram import Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup, CallbackGame
 from telegram.ext import Dispatcher, CommandHandler, CallbackQueryHandler
 
 load_dotenv()
@@ -16,10 +16,14 @@ dispatcher = Dispatcher(bot, None, workers=0)
 
 def start(update, context):
     keyboard = [
-        [InlineKeyboardButton("🎮 Play Unlock Me", callback_game={})]
+        [InlineKeyboardButton("🎮 Play Unlock Me", url=GAME_URL)]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    context.bot.send_game(chat_id=update.effective_chat.id, game_short_name=GAME_SHORT_NAME, reply_markup=reply_markup)
+    context.bot.send_game(
+        chat_id=update.effective_chat.id,
+        game_short_name=GAME_SHORT_NAME,
+        reply_markup=reply_markup
+    )
 
 def game_callback(update, context):
     query = update.callback_query
