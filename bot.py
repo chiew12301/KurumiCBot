@@ -23,10 +23,11 @@ def start(update, context):
 
 def game_callback(update, context):
     query = update.callback_query
+    print(f"Callback data: {query.data}, GAME_URL: {GAME_URL}")
     if query.data == GAME_SHORT_NAME:
         query.answer(url=GAME_URL)
     else:
-        query.answer("Unknown game.")
+        query.answer(text="Unknown game.")
 
 dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(CallbackQueryHandler(game_callback))
