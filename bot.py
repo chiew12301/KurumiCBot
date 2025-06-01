@@ -19,7 +19,7 @@ def start(update, context):
         [InlineKeyboardButton("🎮 Play Unlock Me", callback_game={})]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    update.message.reply_text("Try Unlock Me by KurumiC!", reply_markup=reply_markup)
+    context.bot.send_game(chat_id=update.effective_chat.id, game_short_name=GAME_SHORT_NAME, reply_markup=reply_markup)
 
 def game_callback(update, context):
     query = update.callback_query
